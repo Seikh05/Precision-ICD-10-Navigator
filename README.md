@@ -10,123 +10,216 @@ A smart Gradio-based AI app that maps free-text clinical diagnoses to standardiz
 - 💡 Smart semantic matching with **Sentence Transformers**
 - 🧾 Fuzzy logic for approximate textual matches
 - 🔗 Hugging Face-hosted **ICD-10 data & embeddings**
+- 📊 Full pipeline reproducible in **Google Colab**
 - 🎨 Beautiful Gradio UI with live predictions and examples
+
+---
+
+## 📂 Project Structure
+
+### 🖥️ Local Project Layout
+
+```bash
+icd10_diagnosis_mapping/
+├── data/
+│   ├── raw/
+│   │   ├── ICD10codes.csv
+│   │   └── Diagnoses_list.xlsx
+│   ├── processed/
+│   └── output/
+├── models/
+│   └── embeddings/
+├── notebooks/
+│   └── ICD10_Mapping_Colab.ipynb
+├── src/
+│   ├── data_loader.py
+│   ├── preprocessor.py
+│   ├── icd10_mapper.py
+│   ├── similarity_matcher.py
+│   └── main.py
+├── config/
+│   └── config.yaml
+├── run_pipeline.py
+├── requirements.txt
+└── README.md
+````
+
+---
+
+### 📁 Colab-Compatible Google Drive Structure
+
+If using [Google Colab](https://colab.research.google.com):
+
+```
+My Drive/
+└── ICD10_Mapping_Project/
+    ├── data/
+    │   ├── raw/
+    │   │   ├── ICD10codes.csv
+    │   │   └── Diagnoses_list.xlsx
+    │   ├── processed/
+    │   └── output/
+    ├── models/
+    │   └── embeddings/
+    ├── notebooks/
+    │   └── ICD10_Mapping_Colab.ipynb
+    └── config/
+        └── config.yaml
+```
+
+---
+
+## 🧪 Try the Full Pipeline on Google Colab
+
+🎯 Click the badge below to open the full working pipeline notebook:
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/19BeTdJyKUaMa2MwK5kUrwMHq6ErXLCbr?usp=sharing)
+
+The Colab notebook includes:
+
+* 📥 Loading ICD-10 and patient diagnosis data
+* 🧠 Sentence Transformer embedding generation
+* 🔍 Semantic similarity + fuzzy matching
+* 📤 Exporting mapped results as `.csv` and `.json`
+
+---
+
+## 🧠 Training & Pipeline Summary
+
+1. **Load Raw Data**: `ICD10codes.csv` and `Diagnoses_list.xlsx` from `data/raw/`
+2. **Generate Embeddings** using `all-MiniLM-L6-v2`
+
+   * Saved to `models/embeddings/icd10_embeddings.npy`
+3. **Perform Semantic Matching** with cosine similarity
+4. **Output Results**
+
+   * `mapped_diagnoses.csv`: main mapping table
+   * `mapping_report.json`: confidence and ambiguity report
+
+### Example CLI Output
+
+```bash
+(venv) (.venv) C:\Users\91955\OneDrive\Desktop\ICD10>python run_pipeline.py
+Loading Sentence Transformer model: all-MiniLM-L6-v2
+--- Starting ICD-10 Diagnosis Mapping Pipeline ---
+
+Step 1: Loading raw data...
+Loaded ICD-10 codes from: data/raw\ICD10codes.csv
+Loaded patient diagnoses from: data/raw\Diagnoses_list.xlsx
+
+Step 2: Validating raw data...
+Preparing ICD-10 data...
+Generating ICD-10 embeddings (this may take a while)...
+Batches: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 2241/2241 [06:21<00:00,  5.88it/s] 
+Saved ICD-10 embeddings to: models\embeddings\icd10_embeddings.npy
+ICD-10 data preparation complete.
+
+Step 4: Preprocessing patient diagnoses...
+
+Step 5: Mapping diagnoses to ICD-10 codes...
+
+Step 6: Saving results...
+Saved mapped diagnoses to: data/output\mapped_diagnoses.csv
+
+Pipeline completed successfully!
+Saved mapping report to: data/output\mapping_report.json
+```
 
 ---
 
 ## 🗃️ Data Files Used
 
 ### 📄 [`ICD10codes.csv`](https://huggingface.co/datasets/Neural-Nook/icd10-codes-data/blob/main/ICD10codes.csv)
-- Contains raw ICD-10 codes and official medical descriptions.
-- Used to compare user input against real-world diagnoses.
-- Loaded directly via URL using `pandas.read_csv()`.
+
+* Official ICD-10 codes and descriptions.
+### 🧠 [`Diagnoses_list.xlsx`](https://docs.google.com/spreadsheets/d/1O2wW-wQukh2F2o4_w7AmM2mS2wFwMGzYCdIGh54MT8Q/edit?gid=0#gid=0))
+
+* Sentence Transformer embeddings for ICD-10 descriptions.
 
 ### 🧠 [`icd10_embeddings.npy`](https://huggingface.co/datasets/Neural-Nook/icd10-codes-data/resolve/main/icd10_embeddings.npy)
-- Pre-computed sentence embeddings for each ICD-10 description.
-- Created using a Sentence Transformer (`all-MiniLM-L6-v2`).
-- Loaded with `numpy.load()` from Hugging Face.
 
----
-
-## 📂 Project Structure
-
-```bash
-ICD10_DIAGNOSIS_MAPPER/
-├── app.py              # Main Gradio app
-├── config.yaml         # Settings for models and thresholds
-├── requirements.txt    # Dependencies
-├── README.md           # Project documentation
-└── .gitattributes      # Git LFS tracking (if needed)
-````
+* It holds all the symptomes/diagnoses list to be mapped.
 
 ---
 
 ## ⚙️ Installation
 
-### 1. Clone the repo
-
 ```bash
 git clone https://github.com/your-username/icd10-diagnosis-mapper.git
 cd icd10-diagnosis-mapper
-```
-
-### 2. (Optional) Create a virtual environment
-
-```bash
 python -m venv venv
-source venv/bin/activate  # Linux/macOS
-venv\Scripts\activate     # Windows
-```
-
-### 3. Install dependencies
-
-```bash
+source venv/bin/activate   # or venv\Scripts\activate on Windows
 pip install -r requirements.txt
-```
-
----
-
-## ▶️ Run Locally
-
-```bash
 python app.py
 ```
 
-This will launch the Gradio UI at:
+# 🚀 Deploying to Hugging Face Spaces
 
-```
-http://localhost:7860
-```
+You can host this project as a **public or private app** on [Hugging Face Spaces](https://huggingface.co/spaces), using **Gradio** as the interface.
 
 ---
 
-## 🛰️ Deploy to Hugging Face Spaces
+### 🛠️ Deployment Steps
 
-You can host your app publicly using [Hugging Face Spaces](https://huggingface.co/spaces):
+1. **Create a Hugging Face account**
+   Sign up or log in at [https://huggingface.co](https://huggingface.co)
 
-### ✅ Steps:
+2. **Go to** [https://huggingface.co/spaces](https://huggingface.co/spaces)
+   Click **“Create new Space”**
 
-1. **Create a Hugging Face account** (if not already)
-2. **Go to:** [https://huggingface.co/spaces](https://huggingface.co/spaces)
-3. Click **"Create New Space"**
-4. Choose:
+3. **Configure your space**
 
-   * SDK: **Gradio**
-   * Visibility: **Public or Private**
-5. Clone the repo into your space:
+   * **SDK**: Select `Gradio`
+   * **Visibility**: Choose `Public` or `Private`
+   * **Space name**: Example: `mustakim/icd10-diagnosis-mapper`
 
-   * Either **upload files manually**
-   * Or connect your GitHub repo with:
+4. **Clone your Space locally**:
 
-     ```bash
-     git remote add origin https://huggingface.co/spaces/your-username/icd10-diagnosis-mapper
-     git push -u origin main
-     ```
-6. Make sure your **`app.py`** is the entry point
-7. Add these required files:
+   ```bash
+   git lfs install
+   git clone https://huggingface.co/spaces/your-username/icd10-diagnosis-mapper
+   cd icd10-diagnosis-mapper
+   ```
 
+5. **Add your files**
+   Make sure the following are present in the repo:
+
+   * `app.py` (Gradio entry point)
    * `requirements.txt`
-   * `config.yaml`
+   * `README.md`
+   * `config.yaml` (optional, for model/code settings)
+   * Precomputed files (if applicable): `icd10_embeddings.npy`
 
-Done! Hugging Face will automatically launch your app.
+6. **Push to your Space**
+
+   ```bash
+   git add .
+   git commit -m "Initial push"
+   git push
+   ```
+
+7. **Your app will automatically deploy!**
+   Hugging Face will build the environment, install dependencies, and launch your app using Gradio.
 
 ---
 
-## 🌐 Demo on Hugging Face
+### ✅ Tips
 
-👉 **[Launch ICD-10 Mapper Demo](https://huggingface.co/spaces/Neural-Nook/icd10-diagnosis-mapper)**
+* Add a `.gitattributes` file with:
+
+  ```
+  *.npy filter=lfs diff=lfs merge=lfs -text
+  ```
+
+  if you're using Git LFS to track large files.
+
+* If your app takes time to load (e.g. loading `.npy` files or models), consider using `gr.load()` callbacks to defer heavy tasks until first use.
 
 ---
 
-## 🧠 Technologies Used
+## 🌐 Live Demo
 
-| Component                | Description                                |
-| ------------------------ | ------------------------------------------ |
-| 🔎 Sentence Transformers | `all-MiniLM-L6-v2` for semantic embeddings |
-| 🧮 NumPy & Pandas        | Efficient data loading and handling        |
-| 🔤 FuzzyWuzzy            | Token-based string similarity              |
-| 🎨 Gradio                | Frontend interface for interaction         |
-| ☁️ Hugging Face          | Dataset and App hosting                    |
+👉 **[Launch Hugging Face Demo](https://huggingface.co/spaces/Neural-Nook/icd10-diagnosis-mapper)**
 
 ---
 
@@ -134,9 +227,8 @@ Done! Hugging Face will automatically launch your app.
 
 * `type 2 diabetes mellitus with complications`
 * `viral infection`
-* `fracture of the distal radius`
 * `chest pain`
-* `headache`
+* `abnormal weight loss`
 
 ---
 
@@ -144,11 +236,10 @@ Done! Hugging Face will automatically launch your app.
 
 **Made by Mustakim**
 
-> Powered by open-source tech & Hugging Face ❤️
+> Powered by open-source tools & Hugging Face ❤️
 
 ---
 
 ## 📄 License
 
 This project is released under the **MIT License**.
-
