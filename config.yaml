@@ -1,0 +1,33 @@
+# Data Paths
+RAW_DATA_DIR: "data/raw"
+PROCESSED_DATA_DIR: "data/processed"
+OUTPUT_DATA_DIR: "data/output"
+MODELS_DIR: "models"
+
+ICD10_CODES_FILE: "ICD10codes.csv"
+DIAGNOSIS_LIST_FILE: "Diagnoses_list.xlsx"
+
+CLEANED_ICD10_FILE: "cleaned_icd10_codes.csv"
+PROCESSED_DIAGNOSES_FILE: "processed_diagnoses.csv" # Optional, can process on the fly
+
+MAPPED_DIAGNOSES_FILE: "mapped_diagnoses.csv"
+MAPPING_REPORT_FILE: "mapping_report.json"
+
+# ICD-10 Data Column Names (Adjust these based on your actual CSV/Excel)
+ICD_CODE_COL: "Code"
+ICD_DESCRIPTION_COL: "Description"
+
+# Patient Diagnosis Data Column Names
+DIAGNOSIS_COL: "Diagnoses_list" # Column containing the patient diagnoses
+
+# Model Parameters
+SENTENCE_TRANSFORMER_MODEL_NAME: "all-MiniLM-L6-v2"
+ICD_EMBEDDINGS_FILE: "icd10_embeddings.npy" # File to save/load ICD-10 embeddings
+
+# Mapping Parameters
+SEMANTIC_SIMILARITY_THRESHOLD: 0.75 # Confidence score for semantic match
+FUZZY_MATCH_THRESHOLD: 90           # Score for high-confidence fuzzy match
+NUM_ALTERNATIVES: 3                 # Number of alternative suggestions
+
+# Reporting
+REPORT_TITLE: "ICD-10 Diagnosis Mapping Report" 

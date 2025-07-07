@@ -1,0 +1,9 @@
+pandas
+pyyaml
+sentence-transformers
+fuzzywuzzy
+python-levenshtein 
+gradio
+numpy
+tqdm
+torch
