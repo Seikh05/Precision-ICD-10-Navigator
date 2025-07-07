@@ -3,6 +3,9 @@
 A smart Gradio-based AI app that maps free-text clinical diagnoses to standardized **ICD-10 codes**, using semantic embeddings and fuzzy logic.
 
 ---
+## 🎨 App UI Preview
+
+![ICD-10 Mapper UI](https://drive.google.com/uc?id=1mHV1grcGoKl7SYwBeFPahfyX56Ar0meW)
 
 ## 🚀 Features
 
