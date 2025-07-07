@@ -135,7 +135,7 @@ Saved mapping report to: data/output\mapping_report.json
 ### 📄 [`ICD10codes.csv`](https://huggingface.co/datasets/Neural-Nook/icd10-codes-data/blob/main/ICD10codes.csv)
 
 * Official ICD-10 codes and descriptions.
-### 🧠 [`Diagnoses_list.xlsx`](https://docs.google.com/spreadsheets/d/1O2wW-wQukh2F2o4_w7AmM2mS2wFwMGzYCdIGh54MT8Q/edit?gid=0#gid=0))
+### 📄 [`Diagnoses_list.xlsx`](https://docs.google.com/spreadsheets/d/1O2wW-wQukh2F2o4_w7AmM2mS2wFwMGzYCdIGh54MT8Q/edit?gid=0#gid=0))
 
 * Sentence Transformer embeddings for ICD-10 descriptions.
 
@@ -155,12 +155,14 @@ source venv/bin/activate   # or venv\Scripts\activate on Windows
 pip install -r requirements.txt
 python app.py
 ```
+---
 
-# 🚀 Deploying to Hugging Face Spaces
+## 🚀 Deploying to Hugging Face Spaces
 
 You can host this project as a **public or private app** on [Hugging Face Spaces](https://huggingface.co/spaces), using **Gradio** as the interface.
 
 ---
+
 
 ### 🛠️ Deployment Steps
 
